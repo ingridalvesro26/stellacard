@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salão Stella — Cartão Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --moss: #2E3A23;
+    --linen: #FDFCF0;
+    --linen-warm: #F5F2ED;
+    --gold: #A07828;
+    --gold-l: #C5A059;
+    --dark: #1A1A1A;
+    --muted: #8a8a7a;
+  }
+
+  body {
+    background: #1a1f14;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 900px;
+    background: var(--linen);
+    border-radius: 28px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    position: relative;
+  }
+
+  /* ── Painel esquerdo ── */
+  .panel-left {
+    background: var(--moss);
+    padding: 48px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .panel-left::before {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  }
+
+  /* Ornamentos botânicos SVG */
+  .botanical-top {
+    position: absolute;
+    top: -10px; left: -10px;
+    width: 180px; opacity: 0.22;
+    transform: rotate(15deg);
+  }
+
+  .botanical-bot {
+    position: absolute;
+    bottom: -10px; right: -10px;
+    width: 160px; opacity: 0.18;
+    transform: rotate(195deg);
+  }
+
+  .logo-badge {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-l);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .logo-badge::before, .logo-badge::after {
+    content: '';
+    width: 20px; height: 0.5px;
+    background: var(--gold-l);
+    opacity: 0.5;
+  }
+
+  .logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 600;
+    color: var(--linen);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+
+  .logo-divider {
+    display: flex; align-items: center; gap: 10px;
+    margin: 10px 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .logo-divider-line {
+    flex: 1; height: 0.5px;
+    background: linear-gradient(to right, transparent, var(--gold-l), transparent);
+  }
+
+  .logo-diamond {
+    width: 6px; height: 6px;
+    background: var(--gold-l);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .logo-sub {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(253,252,240,0.55);
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .logo-handle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--gold-l);
+    text-align: center;
+  }
+
+  /* ── Painel direito ── */
+  .panel-right {
+    background: var(--linen);
+    padding: 44px 44px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Ornamento direito sutil */
+  .botanical-right {
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 160px; opacity: 0.08;
+  }
+
+  .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--moss);
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+
+  .tagline em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .divider {
+    height: 0.5px;
+    background: linear-gradient(to right, rgba(46,58,35,0.2), transparent);
+    margin: 18px 0;
+  }
+
+  /* Domicílio */
+  .section-label {
+    font-size: 8px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 16px; height: 0.5px;
+    background: var(--gold);
+  }
+
+  .contact-list {
+    display: flex; flex-direction: column; gap: 5px;
+    margin-bottom: 2px;
+  }
+
+  .contact-item {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--dark);
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .contact-item span {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  /* Botões clicáveis */
+  .btns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 0.5px solid transparent;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+
+  .btn-natura {
+    background: var(--moss);
+    border-color: rgba(160,120,40,0.4);
+  }
+
+  .btn-insta {
+    background: var(--linen-warm);
+    border-color: rgba(46,58,35,0.15);
+  }
+
+  .btn-whats {
+    background: var(--linen-warm);
+    border-color: rgba(46,58,35,0.15);
+  }
+
+  .btn-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .btn-natura .btn-icon { background: rgba(160,120,40,0.2); }
+  .btn-insta  .btn-icon { background: rgba(46,58,35,0.08); }
+  .btn-whats  .btn-icon { background: rgba(46,58,35,0.08); }
+
+  .btn-icon svg { width: 15px; height: 15px; }
+
+  .btn-text { flex: 1; }
+
+  .btn-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .btn-natura .btn-label { color: var(--linen); }
+  .btn-insta  .btn-label { color: var(--moss); }
+  .btn-whats  .btn-label { color: var(--moss); }
+
+  .btn-url {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+  }
+
+  .btn-natura .btn-url { color: var(--gold-l); }
+  .btn-insta  .btn-url { color: var(--muted); }
+  .btn-whats  .btn-url { color: var(--muted); }
+
+  .btn-arrow {
+    font-size: 16px;
+    opacity: 0.5;
+  }
+
+  .btn-natura .btn-arrow { color: var(--gold-l); }
+  .btn-insta  .btn-arrow { color: var(--moss); }
+  .btn-whats  .btn-arrow { color: var(--moss); }
+
+  /* Rodapé */
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 0.5px solid rgba(46,58,35,0.08);
+    margin-top: 14px;
+  }
+
+  .footer-text {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-dots {
+    display: flex; gap: 5px; align-items: center;
+  }
+
+  .footer-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  @media (max-width: 680px) {
+    .card {
+      grid-template-columns: 1fr;
+    }
+    .panel-left {
+      padding: 44px 36px 36px;
+      border-radius: 0;
+    }
+    .logo-name { font-size: 80px; }
+    .panel-right { padding: 36px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- ── Painel Esquerdo: Logo ── -->
+  <div class="panel-left">
+    <!-- Ornamentos botânicos -->
+    <svg class="botanical-top" viewBox="0 0 200 300" fill="none">
+      <path d="M100 280 C90 230 30 200 20 150 C10 100 50 60 80 40 C110 20 150 30 160 70 C170 110 140 140 120 160 C100 180 110 220 100 280Z" stroke="#FDFCF0" stroke-width="1.2" fill="none"/>
+      <path d="M100 280 L80 180 L40 120" stroke="#FDFCF0" stroke-width="0.6" fill="none"/>
+      <path d="M100 280 L130 200 L155 140" stroke="#FDFCF0" stroke-width="0.6" fill="none"/>
+      <ellipse cx="50" cy="90" rx="22" ry="12" transform="rotate(-35 50 90)" stroke="#FDFCF0" stroke-width="0.8" fill="none"/>
+      <ellipse cx="155" cy="100" rx="20" ry="11" transform="rotate(25 155 100)" stroke="#FDFCF0" stroke-width="0.8" fill="none"/>
+      <ellipse cx="80" cy="155" rx="18" ry="10" transform="rotate(-20 80 155)" stroke="#FDFCF0" stroke-width="0.7" fill="none"/>
+      <ellipse cx="125" cy="165" rx="17" ry="9" transform="rotate(15 125 165)" stroke="#FDFCF0" stroke-width="0.7" fill="none"/>
+    </svg>
+
+    <svg class="botanical-bot" viewBox="0 0 200 300" fill="none">
+      <path d="M100 280 C90 230 30 200 20 150 C10 100 50 60 80 40 C110 20 150 30 160 70 C170 110 140 140 120 160 C100 180 110 220 100 280Z" stroke="#FDFCF0" stroke-width="1.2" fill="none"/>
+      <path d="M100 280 L80 180 L40 120" stroke="#FDFCF0" stroke-width="0.6" fill="none"/>
+      <path d="M100 280 L130 200 L155 140" stroke="#FDFCF0" stroke-width="0.6" fill="none"/>
+      <ellipse cx="50" cy="90" rx="22" ry="12" transform="rotate(-35 50 90)" stroke="#FDFCF0" stroke-width="0.8" fill="none"/>
+      <ellipse cx="155" cy="100" rx="20" ry="11" transform="rotate(25 155 100)" stroke="#FDFCF0" stroke-width="0.8" fill="none"/>
+    </svg>
+
+    <div class="logo-name">STELLA</div>
+    <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(253,252,240,0.55);text-align:center;margin-bottom:4px;">S A L Ã O &nbsp; D E &nbsp; B E L E Z A</div>
+
+    <div class="logo-divider">
+      <div class="logo-divider-line"></div>
+      <div class="logo-diamond"></div>
+      <div class="logo-divider-line"></div>
+    </div>
+    <div class="logo-handle">@salao_stella</div>
+  </div>
+
+  <!-- ── Painel Direito: Conteúdo ── -->
+  <div class="panel-right">
+
+    <!-- Ornamento direito -->
+    <svg class="botanical-right" viewBox="0 0 200 300" fill="none">
+      <path d="M100 280 C90 230 30 200 20 150 C10 100 50 60 80 40 C110 20 150 30 160 70 C170 110 140 140 120 160 C100 180 110 220 100 280Z" stroke="#2E3A23" stroke-width="1" fill="none"/>
+      <path d="M100 280 L80 180 L40 120" stroke="#2E3A23" stroke-width="0.5" fill="none"/>
+      <ellipse cx="50" cy="90" rx="22" ry="12" transform="rotate(-35 50 90)" stroke="#2E3A23" stroke-width="0.7" fill="none"/>
+      <ellipse cx="155" cy="100" rx="20" ry="11" transform="rotate(25 155 100)" stroke="#2E3A23" stroke-width="0.7" fill="none"/>
+    </svg>
+
+    <div>
+      <p class="tagline">Beleza que transforma,<br><em>cuidado que acolhe.</em></p>
+      <div class="divider"></div>
+
+      <div class="section-label">Atendimento a domicílio</div>
+      <div class="contact-list">
+        <div class="contact-item">Stella <span>· (61) 99200-0571</span></div>
+        
+      </div>
+    </div>
+
+    <div>
+      <div class="btns">
+
+        <!-- Natura -->
+        <a href="https://short.natura.com/tHhL7aJ" target="_blank" class="btn btn-natura">
+          <div class="btn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C5A059" stroke-width="1.8">
+              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2"/>
+              <path d="M8.5 12.5c0-1.9 1.6-3.5 3.5-3.5s3.5 1.6 3.5 3.5"/>
+              <path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8"/>
+            </svg>
+          </div>
+          <div class="btn-text">
+            <div class="btn-label">Loja Natura</div>
+            <div class="btn-url">short.natura.com/tHhL7aJ</div>
+          </div>
+          <span class="btn-arrow">→</span>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/salao_stella?igsh=MW1meWI2cWhjaGE2dg%3D%3D&utm_source=qr" target="_blank" class="btn btn-insta">
+          <div class="btn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2E3A23" stroke-width="1.8">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+          </div>
+          <div class="btn-text">
+            <div class="btn-label">Instagram</div>
+            <div class="btn-url">@salao_stella</div>
+          </div>
+          <span class="btn-arrow">→</span>
+        </a>
+
+        <!-- WhatsApp -->
+        <a href="https://wa.me/5561992000571" target="_blank" class="btn btn-whats">
+          <div class="btn-icon">
+            <svg viewBox="0 0 24 24" fill="#2E3A23">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+          </div>
+          <div class="btn-text">
+            <div class="btn-label">WhatsApp</div>
+            <div class="btn-url">(61) 99200-0571</div>
+          </div>
+          <span class="btn-arrow">→</span>
+        </a>
+
+        <!-- Site -->
+        <a href="https://ingridalvesro26.github.io/Salao-Stella/" target="_blank" class="btn btn-insta">
+          <div class="btn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2E3A23" stroke-width="1.8">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+            </svg>
+          </div>
+          <div class="btn-text">
+            <div class="btn-label">Nosso Site</div>
+            <div class="btn-url">ingridalvesro26.github.io/Salao-Stella</div>
+          </div>
+          <span class="btn-arrow">→</span>
+        </a>
+
+      </div>
+
+      <div class="card-footer">
+        <span class="footer-text">Vicente Pires · Asa Norte</span>
+        <div class="footer-dots">
+          <div class="footer-dot"></div>
+          <div class="footer-dot"></div>
+          <div class="footer-dot"></div>
+        </div>
+        <span class="footer-text">@salao_stella</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
